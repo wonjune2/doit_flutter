@@ -10,4 +10,9 @@ void main(List<String> args) {
   dynamic data = 10;
   data = 'hello';
   data = true;
+
+  var a1 = 10;
+  var a2;
+  var a3;
+  // var? a4 = null;
 }

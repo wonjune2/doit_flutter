@@ -5,3 +5,8 @@ void main(List<String> args) {
   // a1 = null;
   a2 = null;
 }
+
+testFunt() {
+  int a1;
+  // a1 = null;
+}
