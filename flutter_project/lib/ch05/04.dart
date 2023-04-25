@@ -31,3 +31,15 @@ fun1(arg) {
 Function fun2 = (arg) {
   return 10;
 };
+
+some(int f(int a)) {
+  f(30);
+}
+
+int test(int a) {
+  return a;
+}
+
+void main(List<String> args) {
+  some(test);
+}
