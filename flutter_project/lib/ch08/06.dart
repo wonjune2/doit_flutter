@@ -1,67 +1,34 @@
 import 'package:flutter/material.dart';
 
-class MyREDItemWidgetState extends StatefulWidget {
-  const MyREDItemWidgetState({super.key});
-
-  @override
-  State<MyREDItemWidgetState> createState() => _MyREDItemWidgetStateState(
-        Colors.red,
-      );
+void main() {
+  runApp(const MyApp());
 }
 
-class _MyREDItemWidgetStateState extends State<MyREDItemWidgetState> {
-  Color color;
-  _MyREDItemWidgetStateState(this.color);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        color: color,
-        width: 150,
-        height: 150,
-      ),
-    );
+    return const MaterialApp(home: MyListWidget());
   }
 }
 
-class MyBLUEItemWidgetState extends StatefulWidget {
-  const MyBLUEItemWidgetState({super.key});
+class MyListWidget extends StatefulWidget {
+  const MyListWidget({super.key});
 
   @override
-  State<MyBLUEItemWidgetState> createState() =>
-      _MyBLUEItemWidgetStateState(Colors.blue);
-}
-
-class _MyBLUEItemWidgetStateState extends State<MyBLUEItemWidgetState> {
-  Color color;
-  _MyBLUEItemWidgetStateState(this.color);
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        color: color,
-        width: 150,
-        height: 150,
-      ),
-    );
+  State<StatefulWidget> createState() {
+    return _MyListWidgetState();
   }
 }
 
-class MyListWidgetState extends StatefulWidget {
-  const MyListWidgetState({super.key});
-
-  @override
-  State<MyListWidgetState> createState() => _MyListWidgetStateState();
-}
-
-class _MyListWidgetStateState extends State<MyListWidgetState> {
-  @override
+class _MyListWidgetState extends State<MyListWidget> {
   List<Widget> widgetList = [
-    const MyREDItemWidgetState(),
-    const MyBLUEItemWidgetState(),
+    MyColorItemWidget(Colors.red, key: UniqueKey()),
+    MyColorItemWidget(Colors.blue, key: UniqueKey()),
   ];
-
   onChange() {
+    print(widgetList.elementAt(0).key);
     setState(() {
       widgetList.insert(1, widgetList.removeAt(0));
     });
@@ -70,17 +37,37 @@ class _MyListWidgetStateState extends State<MyListWidgetState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Key Test'),
-      ),
-      body: Column(
-        children: [
+        appBar: AppBar(
+          title: const Text('Key Test'),
+        ),
+        body: Column(children: [
           Row(
             children: widgetList,
           ),
-          ElevatedButton(onPressed: onChange, child: const Text('toggle'))
-        ],
-      ),
-    );
+          ElevatedButton(onPressed: onChange, child: const Text("toggle"))
+        ]));
+  }
+}
+
+class MyColorItemWidget extends StatefulWidget {
+  Color color;
+  MyColorItemWidget(this.color, {Key? key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() {
+    return _MyColorItemWidgetState(color);
+  }
+}
+
+class _MyColorItemWidgetState extends State<MyColorItemWidget> {
+  Color color;
+  _MyColorItemWidgetState(this.color);
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: Container(
+      color: color,
+      width: 150,
+      height: 150,
+    ));
   }
 }
