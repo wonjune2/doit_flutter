@@ -1,6 +1,8 @@
 /ios
 /android
 /const
+/assets
+/images
 
 # Miscellaneous
 *.class
