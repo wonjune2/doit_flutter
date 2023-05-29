@@ -13,7 +13,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _selectedIndex = 0;
-  @override
   final List<Widget> _widgetOptions = [
     const Text(
       'First Screen',

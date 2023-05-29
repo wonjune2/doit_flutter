@@ -53,6 +53,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
       );
+    } else {
+      return const Text(
+        'unknown Device',
+      );
     }
   }
 }
