@@ -21,6 +21,18 @@ class MyApp extends StatelessWidget {
         '/three': (context) => const ThreeScreen(),
         '/four': (context) => const FourScreen(),
       },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/three') {
+          return MaterialPageRoute(
+              builder: (context) => const ThreeScreen(), settings: settings);
+        } else if (settings.name == '/four') {
+          return MaterialPageRoute(
+            builder: (context) => const FourScreen(),
+            settings: settings,
+          );
+        }
+        return null;
+      },
     );
   }
 }

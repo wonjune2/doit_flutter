@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyWidget());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+  final bool test = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Test'),
-        ),
-        body: Center(
-          child: GestureDetector(
-            child: const Text('HelloWorld'),
-          ),
-        ),
+      theme: ThemeData(brightness: test ? Brightness.dark : Brightness.light),
+      home: const Scaffold(
+        body: Placeholder(),
       ),
     );
   }

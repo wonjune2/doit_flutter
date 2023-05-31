@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/ch14/01_navigation/user.dart';
 
 class TwoScreen extends StatelessWidget {
   const TwoScreen({super.key});
@@ -31,7 +32,7 @@ class TwoScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pop(context, User(name: 'kim', address: 'busan'));
                   },
                   child: const Text('Pop'),
                 ),
