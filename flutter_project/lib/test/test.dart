@@ -9,27 +9,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+    print('keyboard!!: $keyboardOpen');
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Home Button Example'),
+          title: const Text('Keyboard Status Example'),
         ),
-        body: WillPopScope(
-          onWillPop: () async {
-            // 뒤로가기 버튼이 눌렸을 때의 동작을 수행
-            print('홈 버튼이 눌렸습니다!');
-            // 여기에 원하는 동작을 추가하면 됩니다.
-            // 예를 들어 앱을 종료하려면 SystemNavigator.pop()을 호출할 수 있습니다.
-            // SystemNavigator.pop();
-            return false; // true를 반환하면 기본 동작인 앱 종료를 수행하지 않습니다.
-          },
-          child: const Center(
-            child: Column(
-              children: [
-                Text('Press the Home button'),
-                TextField(),
-              ],
-            ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                keyboardOpen ? 'Keyboard Open' : 'Keyboard Closed',
+                style: const TextStyle(fontSize: 24),
+              ),
+              const SizedBox(height: 20),
+              const TextField(
+                decoration: InputDecoration(
+                  hintText: 'Type something...',
+                ),
+              ),
+            ],
           ),
         ),
       ),
