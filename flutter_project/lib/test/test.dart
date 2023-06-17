@@ -1,172 +1,48 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Flutter code sample for [LogicalKeyboardKey].
+void main() {
+  runApp(const MyApp());
+}
 
-void main() => runApp(const KeyExampleApp());
-
-class KeyExampleApp extends StatelessWidget {
-  const KeyExampleApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Key Handling Example')),
-        body: const MyKeyExample(),
-      ),
-    );
-  }
-}
-
-class MyKeyExample extends StatefulWidget {
-  const MyKeyExample({super.key});
-
-  @override
-  State<MyKeyExample> createState() => _MyKeyExampleState();
-}
-
-class _MyKeyExampleState extends State<MyKeyExample> {
-  // The node used to request the keyboard focus.
-  final FocusNode _focusNode = FocusNode();
-  // The message to display.
-  String? _message;
-
-  // Focus nodes need to be disposed.
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  void _showDialog() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Focus(
-            focusNode: _focusNode,
-            onKey: _handleKeyEvent,
-            child: Dialog(
-              child: AnimatedBuilder(
-                animation: _focusNode,
-                builder: (BuildContext context, Widget? child) {
-                  if (!_focusNode.hasFocus) {
-                    return GestureDetector(
-                      onTap: () {
-                        FocusScope.of(context).requestFocus(_focusNode);
-                      },
-                      child: const Text('Click to focus'),
-                    );
-                  }
-                  return Text(_message ?? 'Press a key');
-                },
-              ),
-            ),
-          );
-        });
-  }
-
-  // Handles the key events from the Focus widget and updates the
-  // _message.
-  KeyEventResult _handleKeyEvent(FocusNode node, RawKeyEvent event) {
-    setState(() {
-      print(event.logicalKey.keyId);
-      if (event.logicalKey == LogicalKeyboardKey.keyQ) {
-        _message = 'Pressed the "Q" key!';
-      } else {
-        if (kReleaseMode) {
-          _message =
-              'Not a Q: Pressed 0x${event.logicalKey.keyId.toRadixString(16)}';
-        } else {
-          // As the name implies, the debugName will only print useful
-          // information in debug mode.
-          _message = 'Not a Q: Pressed ${event.logicalKey.debugName}';
-        }
-      }
-    });
-    return event.logicalKey == LogicalKeyboardKey.keyQ
-        ? KeyEventResult.handled
-        : KeyEventResult.ignored;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    return Container(
-      color: Colors.white,
-      alignment: Alignment.center,
-      child: DefaultTextStyle(
-        style: textTheme.headlineMedium!,
-        // child: Focus(
-        //   focusNode: _focusNode,
-        //   onKey: _handleKeyEvent,
-        //   child: AnimatedBuilder(
-        //     animation: _focusNode,
-        //     builder: (BuildContext context, Widget? child) {
-        //       if (!_focusNode.hasFocus) {
-        //         return GestureDetector(
-        //           onTap: () {
-        //             FocusScope.of(context).requestFocus(_focusNode);
-        //           },
-        //           child: const Text('Click to focus'),
-        //         );
-        //       }
-        //       return Text(_message ?? 'Press a key');
-        //     },
-        //   ),
-        // ),
-        child: Focus(
-          focusNode: _focusNode,
-          onKey: _handleKeyEvent,
-          child: Dialog(
-            child: GestureDetector(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Focus(
-                        focusNode: _focusNode,
-                        child: Dialog(
-                          child: SizedBox(
-                            width: 250,
-                            height: 250,
-                            child: GestureDetector(
-                                onTap: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(_focusNode);
-                                },
-                                child: const Text('FOCUS')),
-                          ),
-                        ),
-                      );
-                    });
-                // FocusScope.of(context).requestFocus(_focusNode);
-              },
-              child: const Text('Click to focus'),
-            ),
-          ),
+        appBar: AppBar(title: const Text('Number Keyboard')),
+        body: const Center(
+          child: NumberKeyboardWidget(),
         ),
       ),
     );
   }
 }
 
-// Focus(
-//           focusNode: _focusNode,
-//           onKey: _handleKeyEvent,
-//           child: AnimatedBuilder(
-//             animation: _focusNode,
-//             builder: (BuildContext context, Widget? child) {
-//               if (!_focusNode.hasFocus) {
-//                 return GestureDetector(
-//                   onTap: () {
-//                     FocusScope.of(context).requestFocus(_focusNode);
-//                   },
-//                   child: const Text('Click to focus'),
-//                 );
-//               }
-//               return Text(_message ?? 'Press a key');
-//             },
-//           ),
-//         ),
+class NumberKeyboardWidget extends StatefulWidget {
+  const NumberKeyboardWidget({super.key});
+
+  @override
+  _NumberKeyboardWidgetState createState() => _NumberKeyboardWidgetState();
+}
+
+class _NumberKeyboardWidgetState extends State<NumberKeyboardWidget> {
+  @override
+  void initState() {
+    super.initState();
+    _showNumberKeyboard();
+  }
+
+  void _showNumberKeyboard() async {
+    await SystemChannels.textInput.invokeMethod('TextInput.show', {
+      'inputType': TextInputType.number.index,
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
