@@ -15,7 +15,7 @@ class _ParentWidgetState extends State<ParentWidget> {
   bool favorited = false;
   int favoriteCount = 10;
 
-  GlobalKey<ChildWidgetState> childKey = GlobalKey();
+  GlobalKey<_ChildWidgetState> childKey = GlobalKey();
   int childCount = 0;
 
   void toggleFavorite() {
@@ -31,7 +31,7 @@ class _ParentWidgetState extends State<ParentWidget> {
   }
 
   void getChildData() {
-    ChildWidgetState? childState = childKey.currentState;
+    _ChildWidgetState? childState = childKey.currentState;
     setState(() {
       childCount = childState?.childCount ?? 0;
     });
